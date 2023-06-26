@@ -1,0 +1,27 @@
+<div class="container products">
+  <input type="text" class="search-field" [formControl]="searchText" placeholder="Search" />
+  <ul class="product-list">
+    <li *ngFor="
+        let product of searchResult | slice : paginationStart : paginationEnd
+      " [attr.data-id]="product.id">
+      <div class="product-title">
+        {{ product.title }}
+      </div>
+      <div class="product-price">{{ product.price }} DKK</div>
+    </li>
+  </ul>
+  <div class="no-products" *ngIf="searchResult.length === 0 && shouldLoadData === 'done'">
+    <p>No products found</p>
+  </div>
+  <div class="no-products" *ngIf="shouldLoadData === 'loading'">
+    <p>Loading data...</p>
+  </div>
+  <div class="pagination" *ngIf="searchResult.length > 0">
+    <button [disabled]="paginationStart <= 0" (click)="prevPage()">
+      Prev page
+    </button>
+    <button [disabled]="paginationEnd >= searchResult.length" (click)="nextPage()">
+      Next page
+    </button>
+  </div>
+</div>
